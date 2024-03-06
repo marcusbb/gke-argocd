@@ -6,7 +6,7 @@ You can read the code in [main](main.tf) which gives the most in depth explanati
 
 Argo does deployment management on Kubernetes!  So this repository gives you the bootstrapping capabilities to manage your Kubernetes cluster once set up.
 
-Remember to source you GCP credentials appropriately.
+Remember to source you GCP credentials appropriately, using a service account https://cloud.google.com/iam/docs/keys-create-delete
 
 There is a terrible workaround on [line 58](main.tf) which basically a timed wait condition for the GKE cluster to become ready.  This is documented here
 https://github.com/hashicorp/terraform-provider-google/issues/7823
