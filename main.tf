@@ -22,10 +22,13 @@ resource "google_container_cluster" "my_cluster" {
   deletion_protection = false
 }
 
+
+
+
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "primary"
   cluster    = google_container_cluster.my_cluster.id
-  node_count = 1
+  node_count = 3
 
   node_config {
     preemptible  = true
@@ -47,11 +50,17 @@ provider "kubernetes" {
     token                  = data.google_client_config.default.access_token
     cluster_ca_certificate = base64decode(google_container_cluster.my_cluster.master_auth[0].cluster_ca_certificate)
 }
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
 resource "kubernetes_namespace" "argo-ns" {
   metadata {
     name = "argocd"
   }
 }
+
 
 # The awful work-around
 # So the kubernetes api is not ready to service helm below
